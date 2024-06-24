@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'wsap' => [
+        'key' => env('WSAP_KEY'),
+        'host' => env('WSAP_HOST'),
+        'point' => env('WSAP_POINT'),
+    ],
+
 ];
