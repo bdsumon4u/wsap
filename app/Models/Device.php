@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use App\Enums\DeviceStatus;
+use App\WSAP;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Http;
 
 class Device extends Model
@@ -52,6 +54,8 @@ class Device extends Model
         if ($this->state() == 'CONNECTED') {
             if ($this->status != DeviceStatus::CONNECTED) {
                 $this->update(['status' => DeviceStatus::CONNECTED]);
+
+                WSAP::contacts($this);
             }
 
             return true;
@@ -62,5 +66,10 @@ class Device extends Model
         }
 
         return false;
+    }
+
+    public function contacts(): HasMany
+    {
+        return $this->hasMany(Contact::class);
     }
 }

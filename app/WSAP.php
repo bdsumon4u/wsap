@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\Device;
+use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\HtmlString;
 
@@ -34,7 +35,40 @@ class WSAP
         ]))->json('message', 'QR Code');
 
         return new HtmlString('
-            <img wire:poll.3s src="'. $device->qrCodeImageSrc .'" alt="'. $alt .'" />
+            <div style="background-color: black; padding: 0.5rem;">
+                <img wire:poll.3s src="' . $device->qrCodeImageSrc . '" alt="' . $alt . '" />
+            </div>
         ');
+    }
+
+    public static function contacts(Device $device)
+    {
+        return Http::get(implode('/', [
+            config('services.wsap.host'),
+            'client/getContacts',
+            $device->uuid,
+        ]))->collect('contacts')->each(function ($contact) use ($device) {
+            if (! isset($contact['name'])) {
+                return;
+            }
+
+            $device->contacts()->updateOrCreate([
+                'number' => $contact['number'],
+            ], [
+                'name' => $contact['name'],
+                'registered' => true,
+            ]);
+        });
+    }
+
+    public static function isRegistered(string $number): bool
+    {
+        $device = value(Filament::auth()->user())->devices()->inRandomOrder()->first();
+
+        return Http::post(implode('/', [
+            config('services.wsap.host'),
+            'client/isRegisteredUser',
+            $device->uuid,
+        ]), compact('number'))->json('result');
     }
 }
