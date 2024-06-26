@@ -25,23 +25,14 @@ class ContactResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('device_id')
-                    ->relationship('device', 'name')
-                    ->searchable()
-                    ->preload()
-                        ->searchabl()
-                    ->required()
-                    ->live(true),
                 Forms\Components\TextInput::make('name')
                     ->label('Name')
                     ->required()
-                    ->placeholder('John Doe')
-                    ->hidden(fn ($get) => !$get('device_id')),
+                    ->placeholder('John Doe'),
                 Forms\Components\TextInput::make('number')
                     ->label('Number')
                     ->required()
                     ->placeholder('8801xxxxxxxxx')
-                    ->hidden(fn ($get) => !$get('device_id'))
                     ->rules([
                         fn (Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
                             if (! preg_match('/^8801\d{9}$/', $value)) {

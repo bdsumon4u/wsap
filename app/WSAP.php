@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Contact;
 use App\Models\Device;
 use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Http;
@@ -26,6 +27,12 @@ class WSAP
                 </svg>
             ');
         }
+
+        info('restart', Http::get(implode('/', [
+            config('services.wsap.host'),
+            'session/restart',
+            $device->uuid,
+        ]))->json());
 
         $alt = Http::get(implode('/', [
             config('services.wsap.host'),
@@ -52,7 +59,8 @@ class WSAP
                 return;
             }
 
-            $device->contacts()->updateOrCreate([
+            Contact::updateOrCreate([
+                // user_id
                 'number' => $contact['number'],
             ], [
                 'name' => $contact['name'],
