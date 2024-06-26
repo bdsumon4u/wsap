@@ -10,6 +10,14 @@ class Contact extends Model
 {
     use HasFactory;
 
+    protected function casts(): array
+    {
+        return [
+            'name' => 'encrypted',
+            'number' => 'encrypted',
+        ];
+    }
+
     public function device(): BelongsTo
     {
         return $this->belongsTo(Device::class);

@@ -10,6 +10,13 @@ class Message extends Model
 {
     use HasFactory;
 
+    protected function casts(): array
+    {
+        return [
+            'content' => 'encrypted',
+        ];
+    }
+
     public function device(): BelongsTo
     {
         return $this->belongsTo(Device::class);

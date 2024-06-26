@@ -28,12 +28,6 @@ class WSAP
             ');
         }
 
-        info('restart', Http::get(implode('/', [
-            config('services.wsap.host'),
-            'session/restart',
-            $device->uuid,
-        ]))->json());
-
         $alt = Http::get(implode('/', [
             config('services.wsap.host'),
             'session/qr',
@@ -60,7 +54,7 @@ class WSAP
             }
 
             Contact::updateOrCreate([
-                // user_id
+                'user_id' => $device->user_id,
                 'number' => $contact['number'],
             ], [
                 'name' => $contact['name'],
