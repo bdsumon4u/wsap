@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+export WWWUSER=${WWWUSER:-$UID}
+export WWWGROUP=${WWWGROUP:-$(id -g)}
+
+docker compose exec wsap sh -c "cd /app && npm run start"

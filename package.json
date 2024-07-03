@@ -1,8 +1,10 @@
 {
     "private": true,
     "type": "module",
+    "main": "server.js",
     "scripts": {
         "dev": "vite",
+        "start": "node .",
         "build": "vite build"
     },
     "devDependencies": {
