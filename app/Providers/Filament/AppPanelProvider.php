@@ -9,9 +9,11 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Tables\Table;
 use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
@@ -57,7 +59,18 @@ class AppPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->databaseTransactions()
-            ->unsavedChangesAlerts()
             ->spa();
+    }
+
+    /**
+     * Bootstrap any application services.
+     */
+    public function boot(): void
+    {
+        Model::unguard();
+        Table::$defaultCurrency = 'bdt';
+        Table::$defaultDateDisplayFormat = 'd-M-Y';
+        Table::$defaultTimeDisplayFormat = 'h:i:s A';
+        Table::$defaultDateTimeDisplayFormat = 'd-M-Y h:i:s A';
     }
 }

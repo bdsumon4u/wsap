@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'wsap' => [
+        'point' => env('WSAP_POINT'),
+    ],
+
 ];
