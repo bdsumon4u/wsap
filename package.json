@@ -8,8 +8,15 @@
         "build": "vite build"
     },
     "devDependencies": {
+        "@tailwindcss/forms": "^0.5.7",
+        "@tailwindcss/typography": "^0.5.13",
+        "autoprefixer": "^10.4.19",
         "axios": "^1.7.2",
+        "cropperjs": "^1.6.2",
         "laravel-vite-plugin": "^1.0",
+        "postcss": "^8.4.39",
+        "postcss-nesting": "^12.1.5",
+        "tailwindcss": "^3.4.4",
         "vite": "^5.0"
     },
     "dependencies": {
@@ -20,6 +27,7 @@
         "express-list-routes": "^1.2.1",
         "express-validator": "^7.1.0",
         "fs": "^0.0.1-security",
+        "link-preview-js": "^3.0.5",
         "node-cleanup": "^2.1.2",
         "path": "^0.12.7",
         "pino": "^9.2.0",

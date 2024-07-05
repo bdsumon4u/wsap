@@ -44,6 +44,16 @@ class AppPanelProvider extends PanelProvider
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
             ])
+            ->plugins([
+                \Awcodes\Curator\CuratorPlugin::make()
+                    ->label('Media')
+                    ->pluralLabel('Media')
+                    ->navigationIcon('heroicon-o-photo')
+                    ->navigationGroup('Content')
+                    ->navigationSort(3)
+                    ->navigationCountBadge()
+                    ->registerNavigation(),
+            ])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -59,7 +69,8 @@ class AppPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->databaseTransactions()
-            ->spa();
+            ->spa()
+            ->viteTheme('resources/css/filament/app/theme.css');
     }
 
     /**
