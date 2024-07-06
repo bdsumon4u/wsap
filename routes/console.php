@@ -26,4 +26,4 @@ Schedule::call(function () {
         })
         ->inRandomOrder()
         ->first()?->send();
-})->everyFiveMinutes();
+})->hourly();
