@@ -10,7 +10,20 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote')->hourly();
 
 Schedule::call(function () {
-    Message::where('scheduled_at', '<=', now())
+    $xannat = '8801783110247';
+
+    Message::query()
+        ->where('scheduled_at', '<=', now())
         ->where('status', '!=', 'sent')
+        ->whereDoesntHave('contact', function ($query) use ($xannat) {
+            $query->where('number', '=', $xannat);
+        })
         ->get()->each->send();
-})->everyMinute();
+    
+    Message::query()
+        ->whereHas('contact', function ($query) use ($xannat) {
+            $query->where('number', '=', $xannat);
+        })
+        ->inRandomOrder()
+        ->first()?->send();
+})->everyFiveMinutes();

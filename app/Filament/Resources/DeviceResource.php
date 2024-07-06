@@ -94,11 +94,11 @@ class DeviceResource extends Resource
                             ])->json();
                         });
 
-                        if ($response['success']) {
+                        if ($response['success'] ?? false) {
                             return new HtmlString('<img wire:poll.3s src="' . $response['data']['qr'] . '" alt="' . $record->name . '">');
                         }
 
-                        return new HtmlString('<p class="text-center">' . $response['message'] . '</p>');
+                        return new HtmlString('<p class="text-center">' . ($response['message'] ?? 'Error success!') . '</p>');
                     }),
             ])
             ->bulkActions([
