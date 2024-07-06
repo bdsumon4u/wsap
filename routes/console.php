@@ -10,7 +10,7 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote')->hourly();
 
 Schedule::call(function () {
-    $xannat = '8801783110247';
+    $xannat = '8801778085554';
 
     Message::query()
         ->where('scheduled_at', '<=', now())
